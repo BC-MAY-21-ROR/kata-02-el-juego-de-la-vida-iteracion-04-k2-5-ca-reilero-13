@@ -13,8 +13,11 @@ class Table
             puts 
         end
     end
-end
 
+    def to_s
+     return  print_table
+    end
+end
 class Cell
     def initialize(state=nil)
     
@@ -30,4 +33,20 @@ class Cell
     end
 end
 
-Table.new(3, 3).print_table
+class Game
+    def initialize
+        puts 'ingrese filas'
+        @rows=gets.chomp.to_i
+        puts 'ingrese columnas'
+        @columns=gets.chomp.to_i
+        @current_generation =  Table.new(@rows, @columns)
+    end
+
+    def rules(cell)
+
+    end
+
+    def next_generation
+    end
+end
+print Table.new(3, 3)
