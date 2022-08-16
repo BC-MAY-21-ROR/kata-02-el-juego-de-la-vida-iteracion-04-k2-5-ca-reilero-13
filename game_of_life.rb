@@ -22,7 +22,9 @@ class Table
   def table 
     @table
   end
-
+  def table=(table)
+    @table=table 
+  end
   def to_s
     print_table
     ''
@@ -67,21 +69,23 @@ end
 
 # Game of life
 class Game
-  def initialize(rows, columns)
+  def initialize(rows, columns,number_generation)
     @rows = rows
     @columns = columns
+    @number_generation =number_generation
     @current_generation = Table.new(@rows, @columns)
     puts @current_generation
     play()
   end
 
   def rules(cell)
-    if cell.to_s == '*' && (neighbors(cell) < 2 || neighbors(cell) > 3)
-      '.'
-    elsif cell.to_s == '.' && neighbors(cell) == 3
-      '*'
+    neighbors_cell = neighbors(cell)
+    if cell.to_s == '*' && (neighbors_cell < 2 || neighbors_cell > 3)
+      Cell.new('.')
+    elsif cell.to_s == '.' && neighbors_cell == 3
+      Cell.new('*')
     else
-      cell.to_s
+      cell
     end
   end
 
@@ -106,13 +110,20 @@ class Game
 
     neighbors_position.count('*')
   end
-
   def play
-    @current_generation.table.each_with_index do |row, i|
-      row.each do |cell|
-        # puts column
-        puts rules(cell)
-      end
+    counter = 0
+    while counter <= @number_generation do # code to be executed end
+        
+        @current_generation.table = @current_generation.table.map.each_with_index do |row, i|
+            rules_array =[]
+            row.each do |cell|
+                rules_array<<rules(cell)
+            end
+            rules_array
+        end
+        puts @current_generation
+  
+        counter = counter + 1;
     end
   end
 
@@ -123,5 +134,7 @@ print 'Enter the number of rows: '
 rows = gets.chomp.to_i
 print 'Enter the number of columns: '
 columns = gets.chomp.to_i
+print 'Enter the number of generation: '
+number_generation = gets.chomp.to_i
 
-Game.new(rows, columns)
+Game.new(rows, columns, number_generation)
