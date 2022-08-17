@@ -130,6 +130,8 @@ class Game
   def next_generation; end
 end
 
+
+
 print 'Enter the number of rows: '
 rows = gets.chomp.to_i
 print 'Enter the number of columns: '
